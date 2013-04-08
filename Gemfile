@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem 'rspec-rails', '2.9.0'
+gem 'rspec-rails', '2.12.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -24,7 +24,8 @@ end
 gem 'jquery-rails'
 
 group :test do
-gem 'capybara', '1.1.2'
+gem 'selenium-webdriver', '2.0'
+gem 'capybara', '2.1.0.beta1'
 end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
