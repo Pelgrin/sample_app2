@@ -9,10 +9,11 @@ describe User do
 
   it { should respond_to(:name) }
   it { should respond_to(:email) }
-  it {should respond_to(:password_digest) }
+  it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:remember_token)}
 
   it { should be_valid }
 
@@ -36,7 +37,7 @@ describe User do
   		addresses = %w[user@foo,com user_at@foo.org example.user@foo. foo@bar_baz.com foo@bar+baz.com]
   		addresses.each do  |invalid_address|
   			@user.email = invalid_address
-  			@user.should be_invalid
+  			@user.should_not be_valid
   		end
   	end
   end
@@ -53,7 +54,7 @@ describe User do
 
   describe 'when email addres is already taken' do
     before do
-      user_with_same_eamil = @user.dup
+      user_with_same_email = @user.dup
       user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
     end
@@ -84,7 +85,7 @@ describe User do
     before { @user.save }
     let(:found_user) { User.find_by_email(@user.email)}
 
-    describe 'with valid password' do
+    describe "with valid password" do
       it { should eql(found_user.authenticate(@user.password)) }
     end
 
@@ -94,5 +95,10 @@ describe User do
       it { should_not eql(user_for_invalid_password) }
       specify { expect(user_for_invalid_password).to be_false}
     end
+  end
+
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank}
   end
 end
